@@ -5,26 +5,22 @@ from studentorg.models import Organization
 from studentorg.forms import OrganizationForm
 from django.urls import reverse_lazy
 
-
-class OrganizationList(ListView):
-    model = Organization
-    context_object_name = 'organization'
-    template_name = 'org_list.html'
-    paginate_by = 5
-
-
 class HomePageView(ListView):
     model = Organization
     context_object_name = 'home'
     template_name = "home.html"
-    paginate_by = 5
 
+class OrganizationList(ListView):
+    model = Organization
+    context_object_name = 'object_list'
+    template_name = 'org_list.html'
+    paginate_by = 5
 
 class OrganizationCreateView(CreateView):
     model = Organization
     form_class = OrganizationForm
     template_name = 'org_form.html'
-    success_url = reverse_lazy('organization-list')
+    success_url = reverse_lazy('organization-list')    
 
 
 class OrganizationUpdateView(UpdateView):
