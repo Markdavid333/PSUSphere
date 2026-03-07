@@ -12,28 +12,39 @@
                         <div class="card-category">Page Subtitle</div>
                     </div>
                     <br />
-<div class="col-md-12 row">
-    <div class="col-md-6">
-        <form class="navbar-left navbar-form nav-search mr-md-3" action="">
-            <div class="input-group">
-                <input type="text" placeholder="Search ..." class="form-control" />
-                <div class="input-group-append">
-                    <span class="input-group-text">
-                        <i class="la la-search search-icon"></i>
-                    </span>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="col-md-6">
-        <div class="pull-right">
-            <a href="{% url 'organization-add' %}" class="btn btn-success btn-rounded">
-                Add Organization
-            </a>
-        </div>
-    </div>
-</div>
-                    <div class="card-body">
+
+                    <!-- Search + Sort Form -->
+                    <form class="navbar-left navbar-form nav-search mr-md-3 row g-2 align-items-center" action="{% url 'organization-list' %}" method="get">
+                        <!-- Search -->
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" placeholder="Search ..." class="form-control" name="q" value="{{ request.GET.q }}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-search search-icon"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sort -->
+                        <div class="col-md-3">
+                            <select class="form-control form-control-sm" name="sort_by">
+                                <option value="name" {% if request.GET.sort_by == 'name' %}selected{% endif %}>Organization Name</option>
+                                <option value="college__college_name" {% if request.GET.sort_by == 'college__college_name' %}selected{% endif %}>College</option>
+                            </select>
+                        </div>
+
+                        <!-- Submit + Add button -->
+                        <div class="col-md-3 text-end">
+                            <button type="submit" class="btn btn-primary btn-sm btn-rounded">Apply</button>
+                            <a href="{% url 'organization-add' %}" class="btn btn-success btn-sm btn-rounded">Add Organization</a>
+                        </div>
+                    </form>
+                    <!-- End Search + Sort Form -->
+
+                    <!-- Table -->
+                    <div class="card-body mt-3">
                         <table class="table table-striped mt-3">
                             <thead>
                                 <tr>
@@ -47,12 +58,12 @@
                                 {% for object in object_list %}
                                 <tr>
                                     <td>{{ object.name }}</td>
-                                    <td>{{ object.college.name }}</td>
+                                    <td>{{ object.college.college_name }}</td>
                                     <td>{{ object.description }}</td>
                                     <td>
-    <a href="{% url 'organization-update' object.id %}" class="btn btn-sm btn-primary">Edit</a>
-    <a href="{% url 'organization-delete' object.id %}" class="btn btn-sm btn-danger">Delete</a>
-</td>
+                                        <a href="{% url 'organization-update' object.id %}" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="{% url 'organization-delete' object.id %}" class="btn btn-sm btn-danger">Delete</a>
+                                    </td>
                                 </tr>
                                 {% empty %}
                                 <tr>
@@ -65,6 +76,7 @@
                         </table>
                         {% include 'includes/pagination.html' %}
                     </div>
+
                 </div>
             </div>
         </div>

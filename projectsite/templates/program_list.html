@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Programs</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+
+                    <!-- Card Header -->
+                    <div class="card-header">
+                        <div class="card-title">List of Programs</div>
+                        <div class="card-category">Manage Programs</div>
+                    </div>
+                    <br />
+
+                    <!-- Search + Add Program Button -->
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-md-6">
+                            <form class="navbar-left navbar-form nav-search mr-md-3" action="{% url 'program-list' %}" method="get">
+                                <div class="input-group">
+                                    <input type="text" placeholder="Search ..." class="form-control" name="q" value="{{ request.GET.q }}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-search search-icon"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>                 
+                        <div class="col-md-6 text-end">
+                            <a href="{% url 'program-add' %}" class="btn btn-success btn-rounded">
+                                Add Program
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Sort Form -->
+                    <div class="col-md-12 mb-3">
+                        <form method="get" class="row g-2 align-items-center">
+                            <div class="col-auto">
+                                <label for="smallSelect" class="col-form-label">Sort by</label>
+                            </div>
+
+                            <div class="col-auto">
+                                <select class="form-control form-control-sm" id="smallSelect" name="sort_by">
+                                    <option value="prog_name" {% if request.GET.sort_by == "prog_name" %}selected{% endif %}>Program Name</option>
+                                    <option value="college__college_name" {% if request.GET.sort_by == "college__college_name"%}selected{% endif %}>College</option>
+                                </select>
+                            </div>
+
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary btn-sm btn-rounded">Sort</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="card-body">
+                        <table class="table table-striped mt-3">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">College</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for object in object_list %}
+                                <tr>
+                                    <td>{{ object.prog_name }}</td>
+                                    <td>{{ object.college.college_name }}</td>
+                                    <td>
+                                        <a href="{% url 'program-update' object.id %}" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="{% url 'program-delete' object.id %}" class="btn btn-sm btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="3" class="text-center">
+                                        <p class="text-sm font-weight-bold mb-0">No Records Found</p>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        {% include 'includes/pagination.html' %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
