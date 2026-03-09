@@ -98,14 +98,14 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                                 <img src="{% static 'img/profile.jpg' %}" alt="user-img" width="36" class="img-circle">
-                                <span>Mark</span>
+                                <span>{{ request.user.username }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
                                 <li>
                                     <div class="user-box">
                                         <div class="u-img"><img src="{% static 'img/profile.jpg' %}" alt="user"></div>
                                         <div class="u-text">
-                                            <h4>Mark David</h4>
+                                            <h4>{{ request.user.username }}</h4>
                                             <p class="text-muted">uzumakib094@gmail.com</p>
                                             <a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
                                         </div>
@@ -134,7 +134,7 @@
                     <div class="info">
                         <a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                             <span>
-                                Mark
+                                {{ request.user.username }}
                                 <span class="user-level">Administrator</span>
                                 <span class="caret"></span>
                             </span>
@@ -150,11 +150,11 @@
                     </div>
                 </div>
                 <ul class="nav">
-                    <li class="nav-item"><a href="index.html"><i class="la la-dashboard"></i><p>Dashboard</p></a></li>
+                    <li class="nav-item"><a href="{% url 'home' %}"><i class="la la-dashboard"></i><p>Dashboard</p></a></li>
                     <li class="nav-item"><a href="{% url 'organization-list' %}"><i class="la la-table"></i><p>Organization</p></a></li>
-                    <li class="nav-item"><a href="forms.html"><i class="la la-keyboard-o"></i><p>Org. Members</p></a></li>
-                    <li class="nav-item"><a href="tables.html"><i class="la la-th"></i><p>Student</p></a></li>
-                    <li class="nav-item"><a href="notifications.html"><i class="la la-bell"></i><p>College</p></a></li>
+                    <li class="nav-item"><a href="{% url 'orgmember-list' %}"><i class="la la-keyboard-o"></i><p>Org. Members</p></a></li>
+                    <li class="nav-item"><a href="{% url 'student-list' %}"><i class="la la-th"></i><p>Student</p></a></li>
+                    <li class="nav-item"><a href="{% url 'college-list' %}"><i class="la la-bell"></i><p>College</p></a></li>
                     <li class="nav-item"><a href="{% url 'program-list' %}"><i class="la la-graduation-cap"></i><p>Program</p></a></li>
                 </ul>
             </div>
@@ -200,5 +200,6 @@
     <script src="{% static 'js/plugin/chart-circle/circles.min.js' %}"></script>
     <script src="{% static 'js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
     <script src="{% static 'js/ready.min.js' %}"></script>
+    
 </body>
 </html>
