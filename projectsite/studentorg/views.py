@@ -32,6 +32,13 @@ class HomePageView(LoginRequiredMixin, ListView):
         )
 
         context["students_joined_this_year"] = count
+
+        # Total organizations
+        context["total_organizations"] = Organization.objects.count()
+
+        # Total programs
+        context["total_programs"] = Program.objects.count()
+
         return context
 
 
@@ -98,6 +105,8 @@ class ProgramList(ListView):
         if sort_by in allowed:
             return sort_by
         return "prog_name"
+
+
 class ProgramCreateView(CreateView):
     model = Program
     form_class = ProgramForm
@@ -116,6 +125,7 @@ class ProgramDeleteView(DeleteView):
     model = Program
     template_name = 'program_del.html'
     success_url = reverse_lazy('program-list')
+
 
 class OrgMemberList(ListView):
     model = OrgMember
@@ -137,6 +147,7 @@ class OrgMemberList(ListView):
 
         return qs
 
+
 class OrgMemberCreateView(CreateView):
     model = OrgMember
     form_class = OrgMemberForm
@@ -155,6 +166,7 @@ class OrgMemberDeleteView(DeleteView):
     model = OrgMember
     template_name = 'orgmember_del.html'
     success_url = reverse_lazy('orgmember-list')
+
 
 class StudentList(ListView):
     model = Student
@@ -181,6 +193,7 @@ class StudentList(ListView):
 
         return qs
 
+
 class StudentCreateView(CreateView):
     model = Student
     form_class = StudentForm
@@ -200,6 +213,7 @@ class StudentDeleteView(DeleteView):
     template_name = 'student_del.html'
     success_url = reverse_lazy('student-list')
 
+
 class CollegeList(ListView):
     model = College
     template_name = 'college_list.html'
@@ -215,6 +229,7 @@ class CollegeList(ListView):
             )
 
         return qs
+
 
 class CollegeCreateView(CreateView):
     model = College
@@ -233,4 +248,4 @@ class CollegeUpdateView(UpdateView):
 class CollegeDeleteView(DeleteView):
     model = College
     template_name = 'college_del.html'
-    success_url = reverse_lazy('college-list')        
+    success_url = reverse_lazy('college-list')

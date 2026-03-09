@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 from studentorg.views import HomePageView, OrganizationList, OrganizationCreateView, OrganizationUpdateView, OrganizationDeleteView, ProgramList, ProgramCreateView, ProgramUpdateView, ProgramDeleteView, OrgMemberList, OrgMemberCreateView, OrgMemberUpdateView, OrgMemberDeleteView, StudentList, StudentCreateView, StudentUpdateView, StudentDeleteView, CollegeList, CollegeCreateView, CollegeUpdateView, CollegeDeleteView
 from studentorg import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -28,3 +30,5 @@ urlpatterns = [
     path('college_list/<pk>', CollegeUpdateView.as_view(), name='college-update'),
     path('college_list/<pk>/delete', CollegeDeleteView.as_view(), name='college-delete'),
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
